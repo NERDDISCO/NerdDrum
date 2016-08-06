@@ -7257,7 +7257,7 @@ var midi = new _ndMidi.ndMidi({
   debug: true
 });
 },{"./lib/ndConnector":50,"./lib/ndMidi":51}],50:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -7266,7 +7266,7 @@ exports.ndConnector = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _socket = require("socket.io-client");
+var _socket = require('socket.io-client');
 
 var _socket2 = _interopRequireDefault(_socket);
 
@@ -7288,7 +7288,7 @@ var ndConnector = exports.ndConnector = function () {
   }
 
   _createClass(ndConnector, [{
-    key: "sendLEDs",
+    key: 'sendLEDs',
     value: function sendLEDs(leds) {
       this.webSocket.emit('NERDDISCO.input', leds);
     }
