@@ -92,7 +92,7 @@ gulp.task('commonjs-bundle',['bundle-commonjs-clean','es6-commonjs'], function()
     .pipe(source('index.js'))
     .pipe(buffer())
     //.pipe(uglify())
-    .pipe(rename('NERDDISCO.js'))
+    .pipe(rename('NERDDISCO-NerdDrum.js'))
     .pipe(gulp.dest(path.js.destination));
 });
 
