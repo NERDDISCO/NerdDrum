@@ -1,0 +1,28 @@
+.ndSelector {
+  position: absolute;
+  border: 5px solid rgba(255, 255, 255, .5);
+
+  transition: opacity .3s ease-in-out;
+  
+  &:after {
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    content: attr(data-name);
+  }
+  
+  
+  &[data-visible='true'] {
+    opacity: 1;
+  }
+  
+  &[data-visible='false'] {
+    opacity: 0;
+    
+    &:after {
+      //opacity: .1;
+    }
+  }
+}

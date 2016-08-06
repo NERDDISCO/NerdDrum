@@ -1,0 +1,45 @@
+@import "ndSelector";
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  font: 1em sans-serif;
+}
+
+h1 {
+  font-size: 2em;
+  padding: 0;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1.25em;
+  padding: 0;
+  margin: .25em 0 0 0;
+}
+
+
+#nerddisco {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+video {
+  display: none;
+  visibility: hidden;
+}
+
+.buttons {
+  margin: .25em 0 0 0;
+  padding: 0 0 0 .5em;
+  display: inline-block;
+  float: left;
+  text-transform: uppercase;
+  border-left: 1px solid #333;
+}

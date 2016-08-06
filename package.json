@@ -1,0 +1,49 @@
+{
+  "name": "NerdDrum",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tim Pietrusky <timpietrusky@gmail.com> (http://timpietrusky.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "latest",
+    "nd-fadecandy-client": "0.0.1",
+    "socket.io": "latest"
+  },
+  "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.13.2",
+    "browserify": "^13.1.0",
+    "del": "^2.2.1",
+    "gulp": "latest",
+    "gulp-add-src": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-babel": "latest",
+    "gulp-concat": "latest",
+    "gulp-minify-css": "latest",
+    "gulp-nodemon": "latest",
+    "gulp-order": "latest",
+    "gulp-plumber": "latest",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "latest",
+    "gulp-uglify": "latest",
+    "gulp-util": "^3.0.7",
+    "gulp-watch": "latest",
+    "node-sass": "latest",
+    "socket.io-client": "^1.4.8",
+    "streamqueue": "latest",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TimPietrusky/NerdDrum.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NERDDISCO/NerdDrum/issues"
+  },
+  "homepage": "https://github.com/NERDDISCO/NerdDrum"
+}
