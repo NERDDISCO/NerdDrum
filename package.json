@@ -32,6 +32,7 @@
     "gulp-uglify": "latest",
     "gulp-util": "^3.0.7",
     "gulp-watch": "latest",
+    "interact-js": "^2.0.1",
     "node-sass": "latest",
     "socket.io-client": "^1.4.8",
     "streamqueue": "latest",
