@@ -36,4 +36,8 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+
+# Project specific
+
 tmp
+public/asset/js/NERDDISCO-NerdDrum.js
