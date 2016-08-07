@@ -14,7 +14,6 @@
     "socket.io": "latest"
   },
   "devDependencies": {
-    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.13.2",
     "browserify": "^13.1.0",
     "del": "^2.2.1",
@@ -33,7 +32,7 @@
     "gulp-uglify": "latest",
     "gulp-util": "^3.0.7",
     "gulp-watch": "latest",
-    "interact-js": "^2.0.1",
+    "interact.js": "^1.2.6",
     "node-sass": "latest",
     "socket.io-client": "^1.4.8",
     "streamqueue": "latest",
