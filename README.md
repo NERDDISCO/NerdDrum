@@ -8,4 +8,12 @@ _Images:_ Left - [XDrum DD-530](http://www.kirstein.de/E-Drums-Sets/XDrum-DD-530
 
 ---
 
+## Contributor
+
+* [Anikó Fejes](https://twitter.com/hubudibu)
+
+---
+
+## Connect with NERD DISCO
+
 [@NERDDISCO](https://twitter.com/NERDDISCO)
