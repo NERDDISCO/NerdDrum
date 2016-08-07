@@ -16,7 +16,8 @@ var gulp = require('gulp'),
     addsrc = require('gulp-add-src'),
     buffer = require('vinyl-buffer'),
     rename = require('gulp-rename'),
-    del = require('del')
+    del = require('del'),
+    envify = require('envify')
 ;
 
 
@@ -35,6 +36,8 @@ var path = {
 // JavaScript paths
 path.js = {
 
+  base : './' + path.root_src + 'js/',
+
   src : [
     path.root_src + 'js/vendor/*'
   ],
@@ -45,84 +48,54 @@ path.js = {
   ],
 
   destination : path.root_public + 'asset/js/',
-  destination_file : 'NERDDISCO.js'
+  destination_file : 'NERDDISCO-NerdDrum.js'
 };
 
 // SASS paths
 path.sass = {
   src : path.root_src + 'sass/*',
   destination : path.root_public + 'asset/css/',
-  destination_file : 'NERDDISCO.css'
 };
 
 
 
 
 
-
-
-
-
-
 /**
- * Remove tmp folder
+ * Remove temporary JS files
  */
-gulp.task('clean-temp', function(){
+gulp.task('clean-temp', function() {
   return del([path.root_tmp]);
 });
 
+
 /*
- * Convert ES6 to Commonjs
+ * Convert ES6 to CommonJS
  */
-gulp.task('es6-commonjs',['clean-temp'], function(){
-  return gulp.src(path.js.babel, { base: './'+path.root_src+'js/' })
+gulp.task('es6-commonjs',['clean-temp'], function() {
+  return gulp.src(path.js.babel, { base: path.js.base })
+    .pipe(plumber())
     .pipe(babel())
     .pipe(addsrc(path.js.src))
     .pipe(gulp.dest(path.root_tmp));
 });
 
-/*
- *
- */
-gulp.task('bundle-commonjs-clean', function(){
-  return del(['es5/commonjs']);
-});
 
-gulp.task('commonjs-bundle',['bundle-commonjs-clean','es6-commonjs'], function(){
-  return browserify([path.root_tmp + '/index.js']).bundle()
+/*
+ * Create a bundle of the generated CommonJS files inside the tmp folder
+ */
+gulp.task('commonjs-bundle',['es6-commonjs'], function() {
+  // Use index.js as the entry point to load all other modules
+  return browserify([path.root_tmp + '/index.js'])
+    // Create a bundle of all the files that are imported into index.js
+    .bundle()
     .pipe(source('index.js'))
     .pipe(buffer())
     //.pipe(uglify())
-    .pipe(rename('NERDDISCO-NerdDrum.js'))
+    .pipe(rename(path.js.destination_file))
     .pipe(gulp.dest(path.js.destination));
 });
 
-
-
-
-
-
-
-
-
-
-
-gulp.task('js', function () {
-  return browserify('./')
-
-  return gulp.src(path.js.babel)
-
-    .pipe(plumber())
-    .pipe(babel())
-    .pipe(addsrc(path.js.src))
-
-    // .pipe(order(path.js.src))
-    .pipe(concat(path.js.destination_file))
-
-    // .pipe(uglify())
-    .pipe(gulp.dest(path.js.destination))
-  ;
-});
 
 
 
@@ -156,10 +129,8 @@ gulp.task('nodemon', function () {
 
 
 /**
- * Watch everything:
- *
+ * Watch everything to rebuild:
  * - JS
- * - HTML (angular views)
  * - SASS
  */
 gulp.task('watcher', function() {
