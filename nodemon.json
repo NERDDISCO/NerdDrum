@@ -3,13 +3,13 @@
 
   "verbose": true,
 
-  "ignore": [ "public" ],
+  "ignore": [ "public", "tmp" ],
 
   "execMap": {
     "js": "node --harmony"
   },
 
   "env": {
-    "NODE_ENV": "live"
+    "NODE_ENV": "production"
   }
 }
