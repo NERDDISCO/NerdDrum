@@ -6,10 +6,9 @@ var express = require('express'),
 ;
 
 
-var env = process.env.NODE_ENV || 'live';
 
 
-
+// sendFile options
 var options = {
   root: __dirname + '/public/',
   dotfiles: 'deny',
@@ -18,7 +17,6 @@ var options = {
       'x-sent': true
   }
 };
-
 
 // Enable static files
 app.use(express.static('public/asset'));
