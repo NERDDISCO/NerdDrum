@@ -28,7 +28,8 @@ var gulp = require('gulp'),
  */
 var path = {
   root_src : 'src/',
-  root_public : 'public/'
+  root_public : 'public/',
+  root_tmp : 'tmp/'
 };
 
 // JavaScript paths
@@ -67,17 +68,17 @@ path.sass = {
  * Remove tmp folder
  */
 gulp.task('clean-temp', function(){
-  return del(['tmp']);
+  return del([path.root_tmp]);
 });
 
 /*
  * Convert ES6 to Commonjs
  */
 gulp.task('es6-commonjs',['clean-temp'], function(){
-  return gulp.src(path.js.babel, { base: './src/js/' })
+  return gulp.src(path.js.babel, { base: './'+path.root_src+'js/' })
     .pipe(babel())
     .pipe(addsrc(path.js.src))
-    .pipe(gulp.dest('tmp'));
+    .pipe(gulp.dest(path.root_tmp));
 });
 
 /*
@@ -88,7 +89,7 @@ gulp.task('bundle-commonjs-clean', function(){
 });
 
 gulp.task('commonjs-bundle',['bundle-commonjs-clean','es6-commonjs'], function(){
-  return browserify(['tmp/index.js']).bundle()
+  return browserify([path.root_tmp + '/index.js']).bundle()
     .pipe(source('index.js'))
     .pipe(buffer())
     //.pipe(uglify())
