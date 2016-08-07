@@ -1,6 +1,6 @@
 'use strict';
 
-export class ndMidi {
+export default class ndMidi {
 
   constructor(args) {
     // System Exclusive Support?

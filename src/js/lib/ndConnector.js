@@ -2,7 +2,7 @@
 
 import io from "socket.io-client";
 
-export class ndConnector {
+export default class ndConnector {
 
   constructor(args) {
     this.url = args.url || 'http://nerddisco.master:1337';
