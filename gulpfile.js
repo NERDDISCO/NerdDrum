@@ -87,7 +87,9 @@ gulp.task('es6-commonjs',['clean-temp'], function() {
 gulp.task('commonjs-bundle',['es6-commonjs'], function() {
   // Use index.js as the entry point to load all other modules
   return browserify([path.root_tmp + '/index.js'])
-    // Create a bundle of all the files that are imported into index.js
+    // Load environment variables from node and replace them
+    .transform('envify', { global: true, _: 'purge' })
+     // Create a bundle of all the files that are imported into index.js
     .bundle()
     .pipe(source('index.js'))
     .pipe(buffer())
