@@ -4,6 +4,8 @@ var express = require('express'),
     io = require('socket.io')(http),
     fadecandyClient = require('nd-fadecandy-client')
 ;
+require('dotenv').load();
+
 
 
 
