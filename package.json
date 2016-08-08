@@ -9,9 +9,12 @@
   "author": "Tim Pietrusky <timpietrusky@gmail.com> (http://timpietrusky.com/)",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^2.0.0",
     "express": "latest",
+    "interact.js": "^1.2.6",
     "nd-fadecandy-client": "0.0.1",
-    "socket.io": "latest"
+    "socket.io": "latest",
+    "socket.io-client": "^1.4.8"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.13.2",
@@ -32,9 +35,7 @@
     "gulp-uglify": "latest",
     "gulp-util": "^3.0.7",
     "gulp-watch": "latest",
-    "interact.js": "^1.2.6",
     "node-sass": "latest",
-    "socket.io-client": "^1.4.8",
     "streamqueue": "latest",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
