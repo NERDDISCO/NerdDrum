@@ -115,10 +115,10 @@ export default class ndSelector {
       // Current position
       this.current_x = parseInt(this.selector_element_x);
       this.current_y = parseInt(this.selector_element_y);
+
+      // Init interact.js
+      this.initInteract();
     }
-
-
-    this.initInteract();
 
   } // / ndSelector.init
 
