@@ -1,10 +1,9 @@
+'use strict';
+
 var gulp = require('gulp'),
-    gutil = require('gulp-util'),
     source = require('vinyl-source-stream'),
     browserify = require('browserify'),
     watch = require('gulp-watch'),
-    concat = require('gulp-concat'),
-    order = require('gulp-order'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     plumber = require('gulp-plumber'),
@@ -68,6 +67,13 @@ gulp.task('clean-temp', function() {
   return del([path.root_tmp]);
 });
 
+/**
+ * Remove old bundle files
+ */
+gulp.task('clean-commonjs-bundle', function() {
+  return del([path.js.destination + path.js.destination_file]);
+});
+
 
 /*
  * Convert ES6 to CommonJS
@@ -84,7 +90,7 @@ gulp.task('es6-commonjs',['clean-temp'], function() {
 /*
  * Create a bundle of the generated CommonJS files inside the tmp folder
  */
-gulp.task('commonjs-bundle',['es6-commonjs'], function() {
+gulp.task('commonjs-bundle',['clean-commonjs-bundle', 'es6-commonjs'], function() {
   // Use index.js as the entry point to load all other modules
   return browserify([path.root_tmp + '/index.js'])
     // Load environment variables from node and replace them
