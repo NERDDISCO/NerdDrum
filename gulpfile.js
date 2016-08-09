@@ -15,8 +15,7 @@ var gulp = require('gulp'),
     addsrc = require('gulp-add-src'),
     buffer = require('vinyl-buffer'),
     rename = require('gulp-rename'),
-    del = require('del'),
-    envify = require('envify')
+    del = require('del')
 ;
 
 
@@ -42,8 +41,7 @@ path.js = {
   ],
 
   babel : [
-    path.root_src + 'js/lib/**/*',
-    path.root_src + 'js/index.js'
+    path.root_src + 'js/**/*'
   ],
 
   destination : path.root_public + 'asset/js/',
@@ -93,8 +91,6 @@ gulp.task('es6-commonjs',['clean-temp'], function() {
 gulp.task('commonjs-bundle',['clean-commonjs-bundle', 'es6-commonjs'], function() {
   // Use index.js as the entry point to load all other modules
   return browserify([path.root_tmp + '/index.js'])
-    // Load environment variables from node and replace them
-    .transform('envify', { global: true, _: 'purge' })
      // Create a bundle of all the files that are imported into index.js
     .bundle()
     .pipe(source('index.js'))
