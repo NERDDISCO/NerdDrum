@@ -109,6 +109,11 @@ export default class ndSelector {
         this.current_x = x;
         this.current_y = y;
 
+        this.selector_element_x = x;
+        this.selector_element_y = y;
+
+        this.savePosition();
+
       }.bind(this), false);
 
 
@@ -128,8 +133,6 @@ export default class ndSelector {
    * http://interactjs.io/
    */
   initInteract() {
-    let _self = this;
-
     // target elements with the "draggable" class
     interact('.draggable')
       .draggable({
@@ -156,14 +159,9 @@ export default class ndSelector {
           // update the position attributes
           target.setAttribute('data-x', x);
           target.setAttribute('data-y', y);
-
-          _self.selector_element_x = x;
-          _self.selector_element_y = y;
         },
         // call this function on every dragend event
-        onend: function(event) {
-          _self.savePosition();
-        }
+        onend: function(event) {}
     });
   } // / initInteract
 
