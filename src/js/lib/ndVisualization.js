@@ -1,121 +1,64 @@
-function ndVisualization(args) {
-  
-  // The canvas element
-  this.canvas_element = args.canvas_element || null;
-  
-  // Is the mouse down on the canvas_element
-  this.canvas_element_is_mouse_down = false;
-  
-  // The event that is fired when the mouse is down
-  this.canvas_element_mouse_down_event = null;
-  
-  // The rendering context of the canvas_element
-  this.canvas_context = null;
-  
-  // The background color for the canvas_context
-  this.canvas_context_background_color = args.canvas_context_background_color || 'rgb(0, 0, 0)';
-  
-  // The parent element for the canvas_element
-  this.parent_element = args.parent_element || document.body;
+'use strict';
+
+export default class ndVisualization {
+
+  constructor(args) {
+    // The canvas element
+    this.canvas_element = args.canvas_element || null;
+    // Is the mouse down on the canvas_element
+    this.canvas_element_is_mouse_down = false;
+    // The event that is fired when the mouse is down
+    this.canvas_element_mouse_down_event = null;
+    // The rendering context of the canvas_element
+    this.canvas_context = null;
+    // The background color for the canvas_context
+    this.canvas_context_background_color = args.canvas_context_background_color || 'rgb(0, 0, 0)';
+    // The parent element for the canvas_element
+    this.parent_element = args.parent_element || document.body;
+
+    // A queue of elements which can be rendered to the canvas
+    this.element_queue = [];
+    // Group of ndSelector
+    this.selectors = args.selectors || null;
+
+    // Is drawing activated?
+    this.drawing_activated = args.drawing_activated || false;
+    // The drawing should not be removed
+    this.drawing_permanent = args.drawing_permanent || false;
+    // Size of one square
+    this.drawing_square_size_x = args.drawing_square_size_x || 60;
+    this.drawing_square_size_y = args.drawing_square_size_y || 60;
+    this.color = args.color || 1;
+    this.current_time = 0;
+
+    // Amount of pixel that are used per LED (pixel_per_led * pixel_per_led)
+    this.pixel_per_led_x = args.pixel_per_led_x || 10;
+    this.pixel_per_led_y = args.pixel_per_led_y || 10;
+    // Amount of LED in every row
+    this.led_row_amount = args.led_row_amount || 8;
+    // Amount of LED in every column
+    this.led_column_amount = args.led_column_amount || 8;
+
+    // Initialize this instance of ndVisualization
+    this.init();
+  }
 
 
 
-
-
-  /*
-   * Elements 
-   */
-  // A queue of elements which can be rendered to the canvas
-  this.element_queue = [];
-
-
-
-
-  /*
-   * @see ndAudio
-   */
-  this.ndAudio = args.ndAudio || null;
-
-
-
-  /*
-   * @see ndMidi
-   */
-  this.ndMidi = args.ndMidi || null;
-
-
-
-  /*
-   * ndSelector
-   */
-  // Group of ndSelector
-  this.selectors = args.selectors || null;
-  
-  
-
-  /*
-   * Drawing mode
-   */
-  // Is drawing activated?
-  this.drawing_activated = args.drawing_activated || false;
-  
-  // The drawing should not be removed
-  this.drawing_permanent = args.drawing_permanent || false;
-  
-  // Size of one square
-  this.drawing_square_size = args.drawing_square_size || 60;
-
-  
-
-  /*
-   * LED
-   */
-  // Amount of pixel that are used per LED (pixel_per_led * pixel_per_led)
-  this.pixel_per_led = args.pixel_per_led || 10;
-
-  // Amount of LED in every row
-  this.led_row_amount = 8;
-
-  // Amount of LED in every column
-  this.led_column_amount = 8;
-
-
-  // Initialize this instance of ndVisualization
-  this.init();
-  
-} // / ndVisualization
-
-
-
-
-
-/*
- * Functions for ndVisualization
- */
-ndVisualization.prototype = {
-  
-  init : function() {
-    
+  init() {
     // The canvas_element is not defined
     if (this.canvas_element === null) {
       // Create the canvas_element
       this.canvas_element = document.createElement('canvas');
-
       // Add the canvas_element to the parent_element
       this.parent_element.appendChild(this.canvas_element);
     }
 
-
-
     // Listen to "resize" events
     window.addEventListener('resize', function(event) {
-      
       // Resize the canvas_element
       this.resize();
-      
     }.bind(this), false); // / window.addEventListener('resize')
-
-
 
     // Listen to the mousedown event on the canvas_element
     this.parent_element.addEventListener('mousedown', function(event) {
@@ -131,8 +74,6 @@ ndVisualization.prototype = {
       }
 
     }.bind(this), true); // / this.canvas_element.addEventListener('mousedown')
-      
-
 
     // Listen to the mouseup event on the canvas_element
     this.parent_element.addEventListener('mouseup', function(event) {
@@ -142,149 +83,161 @@ ndVisualization.prototype = {
       this.canvas_element_mouse_down_event = null;
 
     }.bind(this), true); // / this.canvas_element.addEventListener('mouseup')
-    
-
 
     // Listen to the mousemove event on the canvas_element
     this.parent_element.addEventListener('mousemove', function(event) {
       // Drawing is activated
       if (this.drawing_activated && this.canvas_element_is_mouse_down) {
         event.preventDefault();
-        
+
         // Update the mouse_down_event
         this.canvas_element_mouse_down_event = event;
       }
     }.bind(this), true); // / this.canvas_element.addEventListener('mousemove')
-    
-    
-    
+
     // Set the canvas_context
     this.canvas_context = this.canvas_element.getContext('2d');
-    
     // Resize the canvas_element
     this.resize();
-    
-  }, // / ndVisualization.prototype.init
-  
+  }
 
-  
-  
-  
+
+
   /**
-   * Resize the canvas and every ndVisualizationElement. 
-   * 
+   * Resize the canvas and every ndVisualizationElement.
+   *
    */
-  resize : function() {
-    
+  resize() {
     // Set the width of the canvas_element using the width of the parent_element
     this.canvas_element.width = this.parent_element.clientWidth;
-    
     // Set the height of the canvas_element using the height of the parent_element
     this.canvas_element.height = this.parent_element.clientHeight;
-
-
 
     // Iterate over all elements in the queue
     for (var i = 0; i < this.element_queue.length; i++) {
       // Resize the current element
       this.element_queue[i].resize();
     }
-    
-
 
     // Redraw the default canvas_context
     this.drawDefaultCanvasContext();
-    
-  }, // / ndVisualization.prototype.resize
-  
-  
-  
-  
-  
+  }
+
+
+
+
+
   /**
    * Draw the default canvas_context:
    * - background color
    */
-  drawDefaultCanvasContext : function() {
-
+  drawDefaultCanvasContext() {
     // Clear the canvas_context
     this.canvas_context.clearRect(0, 0, this.canvas_element.width, this.canvas_element.height);
-    
+
     // Set the background color of the canvas_context
     this.canvas_context.fillStyle = this.canvas_context_background_color;
     this.canvas_context.fillRect(0, 0, this.canvas_element.width, this.canvas_element.height);
-    
-  }, // / ndVisualization.prototype.drawDefaultCanvasContext
-  
-  
-  
-  
-  
-  draw : function() {
-    // this.canvas_context.globalCompositeOperation = 'source-over';
+  }
+
+
+
+  draw() {
+
 
     // Drawing is not permanent
     if (!this.drawing_permanent) {
+      this.canvas_context.clearRect(0, 0, this.canvas_element.width, this.canvas_element.height);
       // Redraw the background
-      this.canvas_context.fillStyle = "rgba(0, 0, 0, .3)";
-      this.canvas_context.fillRect(0, 0, this.canvas_element.width, this.canvas_element.height);
-    }
-    
-    if (this.drawing_activated && this.canvas_element_is_mouse_down) {
-      // Draw a square at the (x, y) position of the event
-      this.drawSquare(this.canvas_element_mouse_down_event);
+      /*this.canvas_context.fillStyle = "rgba(0, 0, 0, .6)";
+      this.canvas_context.fillRect(0, 0, this.canvas_element.width, this.canvas_element.height);*/
     }
 
+    if (this.drawing_activated && this.canvas_element_is_mouse_down) {
+      // Draw a square at the (x, y) position of the event
+      //this.drawSquare(this.canvas_element_mouse_down_event);
+      this.drawCircle(this.canvas_element_mouse_down_event);
+    }
 
     // Iterate over all elements in the queue
     for (var i = 0; i < this.element_queue.length; i++) {
       this.element_queue[i].draw();
     }
-    
-  },
-  
-  
-  
+  }
+
+
+
   /**
    * Add an element to the element_queue.
    */
-  addElement : function(element) {
-
+  addElement(element) {
     // Reference to ndVisualization
     element.ndVisualization = this;
-
     // Set the context
     element.context = this.canvas_context;
-    
     // Set the canvas
     element.canvas = this.canvas_element;
-    
-    // Set audio
-    element.ndAudio = this.ndAudio;
-    
     // Add the element to the element_queue
     this.element_queue.push(element);
-  }, // / ndVisualization.addElement
-  
-  
+  }
+
+
   /**
-   * Draw a square onto the canvas_context test test
+   * Draw a square onto the canvas_context
    */
-  drawSquare : function(event) {
-    this.canvas_context.fillStyle = "hsla(" + (360 / 255 * getRandomInt(0, 255)) + ", 100%, 60%,  .5)";
+  drawSquare(event) {
+    this.color = this.color + 4;
+
+    // Random color after x ms
+    if ((this.current_time - event.timeStamp) > event.timeStamp) {
+      this.color = 360 / 255 * this.getRandomInt(0, 255);
+      this.current_time = event.timeStamp + 500;
+    }
+
+    //this.canvas_context.fillStyle = "hsla(" + (360 / 255 * this.getRandomInt(0, 255)) + ", 100%, 60%,  .5)";
+    this.canvas_context.fillStyle = "hsla(" + this.color + ", 100%, 60%,  .75)";
     this.canvas_context.fillRect(
-      event.x - this.drawing_square_size / 2 + (10 * Math.random() / 2),
-      event.y - this.drawing_square_size / 2 + (10 * Math.random() / 2),
-      this.drawing_square_size,
-      this.drawing_square_size
+//      event.x - this.drawing_square_size / 2 + (10 * Math.random() / 2),
+//      event.y - this.drawing_square_size / 2 + (10 * Math.random() / 2),
+event.x - this.drawing_square_size_x / 2,
+event.y - this.drawing_square_size_y / 2,
+      this.drawing_square_size_x,
+      this.drawing_square_size_y
     );
-  }, // / ndVisualization.prototype.drawSquare
+  }
 
 
 
+  /**
+   * Draw a rainbow circle onto the canvas_context
+   */
+  drawCircle(event) {
+    let r = 100;
+    let x = (event.x);
+    let y = (event.y);
+    let factor = 1.237;
+    let factor_color = 1;
+
+    this.color = (this.color + 4) % 360;
+
+    for (var i = 0; i < 360; i += factor_color) {
+      this.canvas_context.beginPath();
+      this.canvas_context.fillStyle = "hsla(" + ( i + this.color) + ", 100%, 50%, 1)";
+      this.canvas_context.arc(
+        (x) + (i * factor),
+        y,
+        r,
+        0,
+        2 * Math.PI,
+        false
+      );
+      this.canvas_context.fill();
+    }
+  }
 
 
-  getLEDs : function() {
+
+  getLEDs() {
     var openPixelControl = [];
 
     // selectors is defined
@@ -292,28 +245,20 @@ ndVisualization.prototype = {
 
       // The (x, y) position of the selector
       var selector_position;
-
       // The image_data represented by the position / size of the selector
       var image_data;
-
       // The list of RGB values
       var rgb_list;
-
       // The position of the current pixel
       var position;
-
       // The current led in the specific row
       var led_row;
-
       // The current led in the specific column
       var led_column;
-
       // The RGB values for every LED
       var leds;
-
       // The index of the current LED
       var current_led;
-
 
 
       // Iterate over all selectors
@@ -327,14 +272,14 @@ ndVisualization.prototype = {
         leds = [];
 
         // Get current (x, y) position from the selector
-        selector_position = selector.getPosition();
+        selector_position = selector.position;
 
         // Get the image data from the canvas using the selector_position
         image_data = this.canvas_context.getImageData(
           selector_position.x,
           selector_position.y,
-          this.pixel_per_led * this.led_row_amount,
-          this.pixel_per_led * this.led_column_amount
+          this.pixel_per_led_x * this.led_row_amount,
+          this.pixel_per_led_y * this.led_column_amount
         );
 
         // Get the data
@@ -342,18 +287,17 @@ ndVisualization.prototype = {
 
 
         // For every row of pixels
-        for (var row = 0; row < this.led_row_amount * this.pixel_per_led; row++) {
-
+        for (var row = 0; row < this.led_row_amount * this.pixel_per_led_x; row++) {
           // For every column pixels
-          for (var column = 0; column < this.led_column_amount * this.pixel_per_led; column++) {
+          for (var column = 0; column < this.led_column_amount * this.pixel_per_led_y; column++) {
 
             // Set the LED for the current pixel
             current_led = led_row * this.led_row_amount + led_column;
 
             // Set the position of the current pixel
-            // - current row: (row * (this.pixel_per_led * this.led_column_amount * 4)) 
+            // - current row: (row * (this.pixel_per_led * this.led_column_amount * 4))
             // - current column: (column * 4)
-            position = (row * (this.pixel_per_led * this.led_column_amount * 4)) + (column * 4);
+            position = (row * (this.pixel_per_led_y * this.led_column_amount * 4)) + (column * 4);
 
             // console.log(led_row, led_column, current_led, position);
 
@@ -378,7 +322,7 @@ ndVisualization.prototype = {
             leds[current_led][2] += rgb_list[position + 2];
 
             // Increase current led per column
-            if ((column + 1) % this.pixel_per_led === 0) {
+            if ((column + 1) % this.pixel_per_led_y === 0) {
               ++led_column;
             }
 
@@ -388,21 +332,21 @@ ndVisualization.prototype = {
           led_column = 0;
 
           // Increase current led per row
-          if ((row + 1) % this.pixel_per_led === 0) {
+          if ((row + 1) % this.pixel_per_led_x === 0) {
             ++led_row;
           }
 
         } // / for every row of LEDs
 
-        
+
         // Iterate over all leds
         for (var i = 0; i < leds.length; i++) {
           // Create a normalized value for red
-          openPixelControl.push(Math.floor(leds[i][0] / (this.pixel_per_led * this.pixel_per_led)));
+          openPixelControl.push(Math.floor(leds[i][0] / (this.pixel_per_led_x * this.pixel_per_led_y)));
           // Create a normalized value for green
-          openPixelControl.push(Math.floor(leds[i][1] / (this.pixel_per_led * this.pixel_per_led)));
+          openPixelControl.push(Math.floor(leds[i][1] / (this.pixel_per_led_x * this.pixel_per_led_y)));
           // Create a normalized value for blue
-          openPixelControl.push(Math.floor(leds[i][2] / (this.pixel_per_led * this.pixel_per_led)));
+          openPixelControl.push(Math.floor(leds[i][2] / (this.pixel_per_led_x * this.pixel_per_led_y)));
         }
 
       }, this); // / this.selectors.forEach
@@ -412,12 +356,12 @@ ndVisualization.prototype = {
 
     return openPixelControl;
   }
-  
-}; // / ndVisualization.prototype
 
 
-function getRandomInt(min, max) {
-  min = Math.floor(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+  getRandomInt(min, max) {
+    min = Math.floor(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+} // / ndVisualization
