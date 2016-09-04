@@ -17,39 +17,16 @@ export default class ndMidi {
 
     //
     this.event = new CustomEvent("ndMidiEvent", { nd : {} });
-/*
-    // A list of devices
-    this.devices = args.devices || null;
 
-    // Internal representation of the devices
-    this._devices = new Map();
-
-    if (this.devices !== null) {
-
-      // Iterate over all devices to find the current input
-      for (let device of this.devices) {
-        // The mapping of input elements
-        device.inputMapping = new Map();
-
-        // Add the device to the Map of devices
-        this._devices.set(device.name, device);
-      }
-
-    }*/
-
-    this.connect();
-
+    this.init();
   } // / constructor
-
-
 
 
 
   /**
    * Get permission to use MIDI devices.
    */
-  connect() {
-
+  init() {
     // Get permission to use connected MIDI devices
     navigator
       .requestMIDIAccess({ sysex: this.sysex })
@@ -59,7 +36,6 @@ export default class ndMidi {
         // Failure
         this.connectFailure.bind(this)
       );
-
   } // / ndMidi.connect
 
 
@@ -106,36 +82,6 @@ export default class ndMidi {
         console.log("type:", input.type, "| id:", input.id, "| manufacturer:", input.manufacturer, "| name:", input.name, "| version:", input.version);
       }
 
-/*
-      // The input is a defined device
-      if (this._devices.has(input.name)) {
-
-        // Get the single device
-        let device = this._devices.get(input.name);
-
-        // Mapping for the current device exists
-        if (device.mapping) {
-
-          // Iterate over all input element mappings
-          for (var key in device.mapping) {
-
-            // Get the note for the current
-            let note = device.mapping[key];
-
-            // Add the note to the inputMapping of the device
-            device.inputMapping.set(note, {
-              pressed : false,
-              velocity : 0
-            });
-
-          } // / Iterate over all input element mappings
-
-        } // / Mapping for the current input exists
-
-      } // / The input is a defined device
-*/
-
-
     } // / Iterate over all input ports
 
   } // / ndMidi.handleInputs
@@ -146,9 +92,7 @@ export default class ndMidi {
    * It's not possible to use the Web MIDI API.
    */
   connectFailure(message) {
-
     console.error(message);
-
   } // / ndMidi.connectFailure
 
 
@@ -159,7 +103,6 @@ export default class ndMidi {
    * @param  MIDIConnectionEvent e
    */
   stateChange(e) {
-
     if (this.debug) {
       console.log(e, e.port.type);
     }
@@ -167,7 +110,6 @@ export default class ndMidi {
     if (e.port.type == "input") {
       this.handleInputs();
     }
-
   } // / ndMidi.stageChange
 
 
@@ -192,22 +134,25 @@ export default class ndMidi {
       return;
     }
 
+    let command = message.data[0].toString(16).charAt(0);
+    let channel = message.data[0].toString(16).charAt(1);
+
     // Create nd.message
     this.event.nd = {};
-    this.event.nd.message = message;
-    this.event.nd.command = message.data[0].toString(16).charAt(0);
-    this.event.nd.channel = message.data[0].toString(16).charAt(1);
-    this.event.nd.name = this.getCommandName(this.event.nd.command);
+    this.event.nd.name = this.getCommandName(command);
     this.event.nd.note = message.data[1];
     this.event.nd.velocity = message.data[2];
-    this.event.nd.type = message.data[0];
+    //this.event.nd.type = message.data[0];
+    //this.event.nd.command = command;
+    //this.event.nd.channel = channel;
+    this.event.nd.device = message.currentTarget.name;
+    this.event.nd.timeStamp = message.timeStamp;
+    //this.event.nd.message = message;
 
     // Send nd.message into the world
     document.body.dispatchEvent(this.event);
 
   } // / ndMidi.inputMessage
-
-
 
 
 
