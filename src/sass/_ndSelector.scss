@@ -1,9 +1,11 @@
 .ndSelector {
-  position: absolute;
+  z-index: 1337;
+  position: fixed;
+  top: 0;
   border: 5px solid rgba(255, 255, 255, .5);
 
   transition: opacity .3s ease-in-out;
-  
+
   &:after {
     color: #fff;
     position: absolute;
@@ -12,15 +14,15 @@
     transform: translate(-50%, -50%);
     content: attr(data-name);
   }
-  
-  
+
+
   &[data-visible='true'] {
     opacity: 1;
   }
-  
+
   &[data-visible='false'] {
     opacity: 0;
-    
+
     &:after {
       //opacity: .1;
     }

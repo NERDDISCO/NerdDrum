@@ -1,5 +1,7 @@
 .ndSelector {
-  position: absolute;
+  z-index: 1337;
+  position: fixed;
+  top: 0;
   border: 5px solid rgba(255, 255, 255, 0.5);
   -webkit-transition: opacity .3s ease-in-out;
   transition: opacity .3s ease-in-out; }
