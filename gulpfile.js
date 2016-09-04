@@ -78,8 +78,11 @@ gulp.task('clean-commonjs-bundle', function() {
  */
 gulp.task('es6-commonjs',['clean-temp'], function() {
   return gulp.src(path.js.babel, { base: path.js.base })
-    .pipe(plumber())
     .pipe(babel())
+    .on('error', function (err) {
+      console.log(err.toString());
+      this.emit('end');
+    })
     .pipe(addsrc(path.js.src))
     .pipe(gulp.dest(path.root_tmp));
 });
@@ -93,6 +96,10 @@ gulp.task('commonjs-bundle',['clean-commonjs-bundle', 'es6-commonjs'], function(
   return browserify([path.root_tmp + '/index.js'])
      // Create a bundle of all the files that are imported into index.js
     .bundle()
+    .on('error', function (err) {
+      console.log(err.toString());
+      this.emit('end');
+    })
     .pipe(source('index.js'))
     .pipe(buffer())
     //.pipe(uglify())
@@ -125,7 +132,10 @@ gulp.task('sass', function () {
  * nodemon
  */
 gulp.task('nodemon', function () {
-  nodemon(require('./nodemon.json'));
+  nodemon(require('./nodemon.json'))
+    .once('quit', function () {
+      console.log('test');
+    });
 });
 
 
