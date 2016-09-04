@@ -95,7 +95,7 @@ function getPixel(position) {
 
 function draw() {
 
-    var amount = 64 * 5;
+    var amount = 30 * 8;
 
     for (var pixel = 0; pixel < amount; pixel++) {
       color = getPixel(pixel + 1);
