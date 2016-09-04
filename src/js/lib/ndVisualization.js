@@ -5,12 +5,14 @@ export default class ndVisualization {
   constructor(args) {
     // The canvas element
     this.canvas_element = args.canvas_element || null;
+    this.c = this.canvas_element;
     // Is the mouse down on the canvas_element
     this.canvas_element_is_mouse_down = false;
     // The event that is fired when the mouse is down
     this.canvas_element_mouse_down_event = null;
     // The rendering context of the canvas_element
     this.canvas_context = null;
+    this.ctx = null;
     // The background color for the canvas_context
     this.canvas_context_background_color = args.canvas_context_background_color || 'rgb(0, 0, 0)';
     // The parent element for the canvas_element
@@ -97,6 +99,8 @@ export default class ndVisualization {
 
     // Set the canvas_context
     this.canvas_context = this.canvas_element.getContext('2d');
+    this.ctx = this.canvas_context;
+    this.c = this.canvas_element;
     // Resize the canvas_element
     this.resize();
   }
@@ -159,6 +163,10 @@ export default class ndVisualization {
       this.drawCircle(this.canvas_element_mouse_down_event);
     }
 
+    if (this.canvas_element === undefined || this.canvas_context === undefined) {
+      return;
+    }
+
     // Iterate over all elements in the queue
     for (var i = 0; i < this.element_queue.length; i++) {
       this.element_queue[i].draw();
@@ -171,12 +179,13 @@ export default class ndVisualization {
    * Add an element to the element_queue.
    */
   addElement(element) {
-    // Reference to ndVisualization
-    element.ndVisualization = this;
-    // Set the context
-    element.context = this.canvas_context;
-    // Set the canvas
-    element.canvas = this.canvas_element;
+    element.c = this.canvas_element;
+    element.ctx = this.canvas_context;
+
+    if (typeof element.init === 'function') {
+      element.init();
+    }
+
     // Add the element to the element_queue
     this.element_queue.push(element);
   }
