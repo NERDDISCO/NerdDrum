@@ -119,8 +119,9 @@ export default class ndVisualization {
 
     // Iterate over all elements in the queue
     for (var i = 0; i < this.element_queue.length; i++) {
+      // @TODO: Implement resize for every child element
       // Resize the current element
-      this.element_queue[i].resize();
+      // this.element_queue[i].resize();
     }
 
     // Redraw the default canvas_context
