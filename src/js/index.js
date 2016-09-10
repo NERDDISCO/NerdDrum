@@ -37,7 +37,7 @@ let selectors = [];
  */
 const visualization = new ndVisualization({
   parent_element : container,
-  drawing_activated : false,
+  drawing_activated : true,
   drawing_permanent : false,
   drawing_square_size_x : 400,
   drawing_square_size_y : 100,
@@ -59,7 +59,7 @@ const websocket = new ndConnector({
  * Control MIDI devices.
  */
 const midi = new ndMidi({
-  debug : false
+  debug : true
 });
 
 const nanopad2 = new ndKorgNanoPad2();
@@ -72,20 +72,21 @@ const edrum = new ndXDrumDD530();
 /*
  * Observable all the things \0_0/
  */
-//nanopad2.listen();
+nanopad2.listen();
 edrum.listen();
 
-let w = 35 / 2;
+let w = 45 / 2;
 
 
-visualization.addElement(new ndParticleGroup({ name : 'snare', x : 0, color : 'red' }));
-visualization.addElement(new ndParticleGroup({ name : 'tom1', x : -w, color : 'green' }));
-visualization.addElement(new ndParticleGroup({ name : 'tom2', x : -w * 1.5, color : 'blue' }));
-visualization.addElement(new ndParticleGroup({ name : 'tom3', x : -w * 2, color : 'orange' }));
-visualization.addElement(new ndParticleGroup({ name : 'crash', x : -w * 2.5, color : 'yellow' }));
-visualization.addElement(new ndParticleGroup({ name : 'ride', x : w, color : 'purple' }));
-visualization.addElement(new ndParticleGroup({ name : 'hihat_open', x : w * 1.5, color : 'khaki' }));
-visualization.addElement(new ndParticleGroup({ name : 'kick', x : w * 2, color : 'greenyellow' }));
+visualization.addElement(new ndParticleGroup({ name : 'snare', x : 0, color : 'rgba(244, 67, 54, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'tom1', x : -w, color : 'rgba(233, 30, 99, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'tom2', x : -w * 1.5, color : 'rgba(156, 39, 176, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'tom3', x : -w * 2, color : 'rgba(103, 58, 183, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'crash', x : -w * 2.5, color : 'rgba(63, 81, 181, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'ride', x : w, color : 'rgba(33, 150, 243, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'hihat_open', x : w * 1.5, color : 'rgba(0, 188, 212, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'hihat_closed', x : w * 1.5, color : 'rgba(76, 175, 80, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'kick', x : -15, color : 'rgba(255, 235, 59, .8)', w : 160, h : 15 }));
 
 
 
@@ -99,12 +100,17 @@ visualization.addElement(new ndParticleGroup({ name : 'kick', x : w * 2, color :
 let fps = 60;
 let data;
 
+
+
+
+
 function update() {
   visualization.draw();
+
+
   data = visualization.getLEDs();
   websocket.sendLEDs(data);
 
-  // console.log(data.length, data);
 
   setTimeout(function() {
     window.requestAnimationFrame(update);
