@@ -17,16 +17,17 @@ export default class ndXDrumDD530 {
 
     // Mapping of notes
     this.mapping = {
-      snare : 38,
-      tom1 : 48,
-      tom2 : 45,
-      tom3 : 43,
-      hihat_open : 46,
-      hihat_closed : 42,
-      hihatControl : 44,
-      crash : 49,
-      ride : 51,
-      kick : 36
+      38: 'snare',
+      48: 'tom1',
+      45: 'tom2',
+      43: 'tom3',
+      46: 'hihat_open',
+      42: 'hihat_closed',
+      44: 'hihatControl',
+      49: 'crash',
+      55: 'crash',
+      51: 'ride',
+      36: 'kick',
     };
 
     this.event = new CustomEvent("ndDrawingEvent", { nd : {} });
@@ -70,42 +71,7 @@ export default class ndXDrumDD530 {
    */
   work(midiEvent) {
     this.event.nd = {};
-
-    switch (midiEvent.nd.note) {
-      case this.mapping.tom1: this.event.nd.name = 'tom1';
-        break;
-
-      case this.mapping.tom2:  this.event.nd.name = 'tom2';
-        break;
-
-      case this.mapping.tom3:  this.event.nd.name = 'tom3';
-        break;
-
-      case this.mapping.snare: this.event.nd.name = 'snare';
-        break;
-
-      case this.mapping.hihat_open: this.event.nd.name = 'hihat_open';
-        break;
-
-      case this.mapping.hihat_closed: this.event.nd.name = 'hihat_closed';
-        break;
-
-      case this.mapping.hihatControl: this.event.nd.name = 'hihatControl';
-        break;
-
-      case this.mapping.crash: this.event.nd.name = 'crash';
-      case 55: this.event.nd.name = 'crash';
-        break;
-
-      case this.mapping.ride: this.event.nd.name = 'ride';
-        break;
-
-      case this.mapping.kick: this.event.nd.name = 'kick';
-        break;
-
-      default:
-
-    }
+    this.event.nd.name = this.mapping[midiEvent.nd.note];
 
     console.log(midiEvent.nd);
 
