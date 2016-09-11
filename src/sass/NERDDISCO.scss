@@ -23,15 +23,19 @@ h2 {
   margin: .25em 0 0 0;
 }
 
-$canvas-size: 480px;
+$canvas-width: 480px;
+$canvas-height: 480px;
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 #nerddisco {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: (- $canvas-size / 2) 0 0 (- $canvas-size / 2);
-  width: $canvas-size;
-  height: $canvas-size;
+  position: relative;
+  width: $canvas-width;
+  height: $canvas-height;
 
   canvas {
     background: #000;

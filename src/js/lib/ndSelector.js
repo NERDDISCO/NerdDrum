@@ -30,25 +30,6 @@ export default class ndSelector {
     // The height of the selector_element (default: 10 real pixel / LED (8 LEDs per row))
     this.selector_element_height = args.selector_element_height || 10 * 8;
 
-    // The x position of the selector_element
-    this.selector_element_x = args.selector_element_x || 0;
-    this.parent_element.offsetWidth / this.selector_element_name
-    // x is saved in localStorage
-    /*if (window.localStorage[this.selector_element_name + 'x'] !== undefined) {
-      // Set the x position of the selector_element
-      this.selector_element_x = window.localStorage[this.selector_element_name + 'x'];
-    }*/
-
-
-    // The y position of the selector_element
-    this.selector_element_y = args.selector_element_y || 0;
-    // y is saved in localStorage
-    /*if (window.localStorage[this.selector_element_name + 'y'] !== undefined) {
-      // Set the y position of the selector_element
-      this.selector_element_y = window.localStorage[this.selector_element_name + 'y'];
-    }*/
-
-
     // The visibility of the selector_element
     this.selector_element_visible = args.selector_element_visible || true;
 
@@ -61,7 +42,7 @@ export default class ndSelector {
    * Initialize the selector:
    * - create the selector_element (div)
    * - set default position
-   * - add the selector_element to it's parent_element
+   * - add the selector_element to its parent_element
    */
   init() {
     // Parent element is defined
@@ -74,7 +55,7 @@ export default class ndSelector {
       this.selector_element.setAttribute('data-name', this.selector_element_name);
 
       // Set the CSS class of the selector_element
-      this.selector_element.className = this.selector_element_class + ' ' + 'draggable';
+      this.selector_element.className = this.selector_element_class;
 
       // Set the width of the selector_element
       this.selector_element.style.width = this.selector_element_width + 'px';
@@ -82,99 +63,15 @@ export default class ndSelector {
       // Set the height of the selector_element
       this.selector_element.style.height = this.selector_element_height + 'px';
 
-      // Set the initial y position of the selector_element
-      // this.selector_element.style.top = this.selector_element_y + 'px';
-      this.selector_element.setAttribute('data-y', this.selector_element_y);
-
-      // Set the initial x position of the selector_element
-      // this.selector_element.style.left = this.selector_element_x + 'px';
-      this.selector_element.setAttribute('data-x', this.selector_element_x);
-
-      // Translate the selector_element to the given (x, y) position
-      this.selector_element.style.transform = 'translate(' + this.selector_element_x + 'px, ' + this.selector_element_y + 'px)';
-
       // Set the initial visibility of the selector_element
       this.setVisible();
 
       // Add the selecotr_element to the parent_element
       this.parent_element.appendChild(this.selector_element);
-
-
-      // Mouse was released
-      this.selector_element.addEventListener('mouseup', function(e) {
-
-        var x = parseInt(this.selector_element.getAttribute('data-x'));
-        var y = parseInt(this.selector_element.getAttribute('data-y'));
-
-        this.current_x = x;
-        this.current_y = y;
-
-        this.selector_element_x = x;
-        this.selector_element_y = y;
-
-        this.savePosition();
-
-      }.bind(this), false);
-
-
-      // Current position
-      this.current_x = parseInt(this.selector_element_x);
-      this.current_y = parseInt(this.selector_element_y);
-
-      // Init interact.js
-      this.initInteract();
     }
 
   } // / ndSelector.init
 
-
-
-  /**
-   * http://interactjs.io/
-   */
-  initInteract() {
-    // target elements with the "draggable" class
-    interact('.draggable')
-      .draggable({
-        // enable inertial throwing
-        inertia: true,
-        // keep the element within the area of it's parent
-        restrict: {
-          restriction: "parent",
-          endOnly: true,
-          elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-        },
-
-        // call this function on every dragmove event
-        onmove: function(event) {
-          let target = event.target,
-              // keep the dragged position in the data-x/data-y attributes
-              x = (parseInt(target.getAttribute('data-x'), 10) || 0) + event.dx,
-              y = (parseInt(target.getAttribute('data-y'), 10) || 0) + event.dy;
-
-          // translate the element
-          target.style.webkitTransform =
-          target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
-
-          // update the position attributes
-          target.setAttribute('data-x', x);
-          target.setAttribute('data-y', y);
-        },
-        // call this function on every dragend event
-        onend: function(event) {}
-    });
-  } // / initInteract
-
-
-
-
-  /**
-   * Save the current position of the selector_element into localStorage
-   */
-  savePosition() {
-    window.localStorage[this.selector_element_name + 'x'] = this.selector_element_x;
-    window.localStorage[this.selector_element_name + 'y'] = this.selector_element_y;
-  } // / savePosition
 
 
   /**
@@ -183,8 +80,8 @@ export default class ndSelector {
   get position() {
     // Return the current (x, y) position, width and height
     return {
-      x : this.selector_element_x,
-      y : this.selector_element_y
+      x : this.selector_element.offsetLeft,
+      y : this.selector_element.offsetTop
     };
   }
 

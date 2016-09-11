@@ -23,14 +23,19 @@ const container = document.getElementById('nerddisco');
  */
 let selectors = [];
 
+const selector_container = document.createElement('div');
+selector_container.classList.add('selector_container');
+
 [1, 2, 3, 4, 5, 6, 7, 8].forEach(name => {
   selectors.push(new ndSelector({
-    parent_element : container,
+    parent_element : selector_container,
     selector_element_name : name,
     selector_element_width : config.pixel_per_led_x * config.led_row_amount,
     selector_element_height : config.pixel_per_led_y * config.led_column_amount
   }));
 });
+
+container.appendChild(selector_container);
 
 /**
  * Handle all visualzations on canvas
