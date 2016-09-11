@@ -1,0 +1,4 @@
+* UI to control visualization
+* UI to control ndSelector
+* Size of the canvas to fixed height
+* ndSelector in the middle on refresh of the canvas

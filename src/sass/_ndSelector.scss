@@ -1,8 +1,10 @@
 .ndSelector {
   z-index: 1337;
-  position: fixed;
+  position: absolute;
   top: 0;
-  border: 5px solid rgba(255, 255, 255, .5);
+  border: 5px solid rgba(255, 0, 0, .5);
+  border-top: 0;
+  border-bottom: 0;
 
   transition: opacity .3s ease-in-out;
 

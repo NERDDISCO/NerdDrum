@@ -1,6 +1,7 @@
 'use strict';
 
-import Observable from 'rxjs/Observable';
+// Stupid hack because I have to load rxjs in CommonJS style :(
+var Observable = require('rxjs/Observable').Observable;
 import 'rxjs/add/observable/fromEvent';
 
 
@@ -8,9 +9,6 @@ import 'rxjs/add/observable/fromEvent';
 export default class ndKorgNanoPad2 {
 
   constructor(args) {
-    // Stupid hack because I have to load rxjs in CommonJS style :(
-    this._Observable = Observable.Observable;
-
     this.device = 'nanoPAD2 MIDI';
   }
 
@@ -19,17 +17,18 @@ export default class ndKorgNanoPad2 {
    * Listen to ndMidiEvent's
    */
   listen() {
+    var midi$ =
+      Observable.fromEvent(document.body, 'ndMidiEvent')
 
-    var audio$ = this._Observable.fromEvent(document.body, 'ndMidiEvent');
+      // Only get messages from a specific device
+      .filter((midiEvent, idx, obs) => {
+        return midiEvent.nd.device.indexOf(this.device) > -1;
+      })
+    ;
 
     // Subscribe to the ndAudioEvent stream
-    audio$.subscribe(midiEvent => {
-
-      // Work only if it's the desired device
-      if (midiEvent.nd.message.currentTarget.name.indexOf(this.device) > -1) {
-        this.work(midiEvent);
-      }
-
+    midi$.subscribe(midiEvent => {
+      this.work(midiEvent);
     });
 
   }

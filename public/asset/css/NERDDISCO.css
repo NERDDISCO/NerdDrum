@@ -1,8 +1,10 @@
 .ndSelector {
   z-index: 1337;
-  position: fixed;
+  position: absolute;
   top: 0;
-  border: 5px solid rgba(255, 255, 255, 0.5);
+  border: 5px solid rgba(255, 0, 0, 0.5);
+  border-top: 0;
+  border-bottom: 0;
   -webkit-transition: opacity .3s ease-in-out;
   transition: opacity .3s ease-in-out; }
   .ndSelector:after {
@@ -26,7 +28,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #000;
+  background: #fff;
   font: 1em sans-serif; }
 
 h1 {
@@ -40,9 +42,14 @@ h2 {
   margin: .25em 0 0 0; }
 
 #nerddisco {
-  position: relative;
-  width: 100%;
-  height: 100%; }
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -240px 0 0 -240px;
+  width: 480px;
+  height: 480px; }
+  #nerddisco canvas {
+    background: #000; }
 
 video {
   display: none;

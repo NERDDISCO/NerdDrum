@@ -1,17 +1,17 @@
 'use strict';
 
-import Observable from 'rxjs/Observable';
+// Stupid hack because I have to load rxjs in CommonJS style :(
+var Observable = require('rxjs/Observable').Observable;
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/filter';
+
+
 
 
 
 export default class ndXDrumDD530 {
 
   constructor(args) {
-    // Stupid hack because I have to load rxjs in CommonJS style :(
-    this._Observable = Observable.Observable;
-
     // Name of the MIDI device
     this.device = 'e-Drum MIDI';
 
@@ -39,7 +39,7 @@ export default class ndXDrumDD530 {
   listen() {
 
     var midi$ =
-      this._Observable.fromEvent(document.body, 'ndMidiEvent')
+      Observable.fromEvent(document.body, 'ndMidiEvent')
 
       // Only get messages from a specific device
       .filter((midiEvent, idx, obs) => {
@@ -94,6 +94,7 @@ export default class ndXDrumDD530 {
         break;
 
       case this.mapping.crash: this.event.nd.name = 'crash';
+      case 55: this.event.nd.name = 'crash';
         break;
 
       case this.mapping.ride: this.event.nd.name = 'ride';
@@ -105,6 +106,8 @@ export default class ndXDrumDD530 {
       default:
 
     }
+
+    console.log(midiEvent.nd);
 
     document.body.dispatchEvent(this.event);
   }

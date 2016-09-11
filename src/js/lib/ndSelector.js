@@ -30,23 +30,23 @@ export default class ndSelector {
     // The height of the selector_element (default: 10 real pixel / LED (8 LEDs per row))
     this.selector_element_height = args.selector_element_height || 10 * 8;
 
-
     // The x position of the selector_element
     this.selector_element_x = args.selector_element_x || 0;
+    this.parent_element.offsetWidth / this.selector_element_name
     // x is saved in localStorage
-    if (window.localStorage[this.selector_element_name + 'x'] !== undefined) {
+    /*if (window.localStorage[this.selector_element_name + 'x'] !== undefined) {
       // Set the x position of the selector_element
       this.selector_element_x = window.localStorage[this.selector_element_name + 'x'];
-    }
+    }*/
 
 
     // The y position of the selector_element
     this.selector_element_y = args.selector_element_y || 0;
     // y is saved in localStorage
-    if (window.localStorage[this.selector_element_name + 'y'] !== undefined) {
+    /*if (window.localStorage[this.selector_element_name + 'y'] !== undefined) {
       // Set the y position of the selector_element
       this.selector_element_y = window.localStorage[this.selector_element_name + 'y'];
-    }
+    }*/
 
 
     // The visibility of the selector_element

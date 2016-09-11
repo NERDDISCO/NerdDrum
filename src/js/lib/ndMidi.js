@@ -9,13 +9,10 @@ export default class ndMidi {
     // @see MIDIAccess
     this.access = args.access || null;
 
-    // @see MIDIOutputMap
-    this.outputMap = args.outputMap || null;
-
     // Show debugging logs?
     this.debug = args.debug || false;
 
-    //
+    // Custom event for MIDI signals
     this.event = new CustomEvent("ndMidiEvent", { nd : {} });
 
     this.init();
@@ -50,9 +47,6 @@ export default class ndMidi {
     // Save a reference to MIDIAccess
     this.access = access;
 
-    // Get the outputs for connected MIDI devices
-    this.outputMap = this.access.outputs;
-
     // Handle all inputs
     this.handleInputs();
 
@@ -79,7 +73,13 @@ export default class ndMidi {
 
       // Show input information
       if (this.debug) {
-        console.log("type:", input.type, "| id:", input.id, "| manufacturer:", input.manufacturer, "| name:", input.name, "| version:", input.version);
+        let device = {
+          manufacturer : input.manufacturer,
+          name : input.name,
+          id : input.id,
+          state : input.state
+        };
+        console.log(device);
       }
 
     } // / Iterate over all input ports
@@ -103,11 +103,11 @@ export default class ndMidi {
    * @param  MIDIConnectionEvent e
    */
   stateChange(e) {
-    if (this.debug) {
-      console.log(e, e.port.type);
-    }
-
     if (e.port.type == "input") {
+      if (this.debug) {
+        console.log(e);
+      }
+
       this.handleInputs();
     }
   } // / ndMidi.stageChange
@@ -137,19 +137,13 @@ export default class ndMidi {
     let command = message.data[0].toString(16).charAt(0);
     let channel = message.data[0].toString(16).charAt(1);
 
-    // Create nd.message
     this.event.nd = {};
     this.event.nd.name = this.getCommandName(command);
     this.event.nd.note = message.data[1];
     this.event.nd.velocity = message.data[2];
-    //this.event.nd.type = message.data[0];
-    //this.event.nd.command = command;
-    //this.event.nd.channel = channel;
     this.event.nd.device = message.currentTarget.name;
     this.event.nd.timeStamp = message.timeStamp;
-    //this.event.nd.message = message;
 
-    // Send nd.message into the world
     document.body.dispatchEvent(this.event);
 
   } // / ndMidi.inputMessage
