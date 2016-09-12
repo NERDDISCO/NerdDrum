@@ -2,8 +2,10 @@
   position: relative;
   margin-left: 40px;
   margin-right: -20px;
+  padding-top: 100px;
   label,
   button {
+    position: relative;
     display: block;
     padding: 20px;
     border: 1px solid rgba(255,255,255,.5);
@@ -14,6 +16,17 @@
     transition: background-position ease-in .3s;
     &:hover, &:focus {
       background-position: -98% 0;
+    }
+    &::after {
+      content: '';
+      width: 1px;
+      border-right: 1px solid rgba(255,255,255,.5);
+      height: 60px;
+      transform-origin: top right;
+      position: absolute;
+      right: 100%;
+      top: 100%;
+      transform: rotate(45deg);
     }
   }
 }
