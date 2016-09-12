@@ -35,26 +35,31 @@ body {
   justify-content: center;
 }
 
-$h: $canvas-height;
-$bs: 0 0 transparent;
-
 $hue: 360;
 $side-d: 120;
 $size-d: 40;
+$h: $canvas-height;
 
-// box shadow shit
-@for $i from 1 to 20 {
-  $bs: $bs,
-     #{-20px - random($side-d)}
-     #{random($h - 4px * $size-d) + 2px * $size-d}
-     0
-     #{random($size-d)+px}
-     hsla($hue, 80%, random(50%), .5),
-     #{20px + random($side-d)}
-     #{random($h - 4px * $size-d) + 2px * $size-d}
-     0
-     #{random($size-d)+px}
-     hsla($hue, 80%, random(50%), .5);
+@mixin box-shadow-shit {
+
+  $bs: 0 0 transparent;
+
+  // box shadow shit
+  @for $i from 1 to 20 {
+    $bs: $bs,
+       #{-20px - random($side-d)}
+       #{random($h - 4px * $size-d) + 2px * $size-d}
+       0
+       #{random($size-d)+px}
+       hsla($hue, 80%, random(50%), .5),
+       #{20px + random($side-d)}
+       #{random($h - 4px * $size-d) + 2px * $size-d}
+       0
+       #{random($size-d)+px}
+       hsla($hue, 80%, random(50%), .5);
+  }
+
+  box-shadow: $bs;
 }
 
 #nerddisco {
@@ -73,12 +78,31 @@ $size-d: 40;
     top: 0;
     left: 0;
     right: 0;
-    box-shadow: $bs;
+    @include box-shadow-shit;
+    animation: moving-box-shadow-shit 200s alternate infinite;
   }
 
   canvas {
     position: relative;
     background: #000;
+  }
+}
+
+@keyframes moving-box-shadow-shit {
+  0% {
+    @include box-shadow-shit;
+  }
+  20% {
+    @include box-shadow-shit;
+  }
+  50% {
+    @include box-shadow-shit;
+  }
+  70% {
+    @include box-shadow-shit;
+  }
+  100% {
+    @include box-shadow-shit;
   }
 }
 
