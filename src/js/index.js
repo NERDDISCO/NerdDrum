@@ -83,17 +83,19 @@ edrum.listen();
 let canvas_width = container.clientWidth;
 let w = canvas_width / 9;
 
+let getPosition = (n) => w * (n - 4.5);
 
 // x should always be on n.5 to match selectors
-visualization.addElement(new ndParticleGroup({ name : 'snare', x : w * .5, w: w, color : 'rgba(244, 67, 54, .8)' }));
-visualization.addElement(new ndParticleGroup({ name : 'tom1', x : -w * .5, w: w, color : 'rgba(233, 30, 99, .8)' }));
-visualization.addElement(new ndParticleGroup({ name : 'tom2', x : -w * 1.5, w: w, color : 'rgba(156, 39, 176, .8)' }));
-visualization.addElement(new ndParticleGroup({ name : 'tom3', x : -w * 2.5, w: w, color : 'rgba(103, 58, 183, .8)' }));
-visualization.addElement(new ndParticleGroup({ name : 'crash', x : -w * 3.5, w: w, color : 'rgba(63, 81, 181, .8)' }));
-visualization.addElement(new ndParticleGroup({ name : 'ride', x : w * .5, w: w, color : 'rgba(33, 150, 243, .8)' }));
-visualization.addElement(new ndParticleGroup({ name : 'hihat_open', x : w * 2.5, w: w, color : 'rgba(0, 188, 212, .8)' }));
-visualization.addElement(new ndParticleGroup({ name : 'hihat_closed', x : w * 3.5, w: w, color : 'rgba(76, 175, 80, .8)' }));
-visualization.addElement(new ndParticleGroup({ name : 'kick', x : -w * .5, color : 'rgba(255, 235, 59, .8)', w : 3*w, h : 15 }));
+// w should always be w*(2n+1) to match selectors
+visualization.addElement(new ndParticleGroup({ name : 'snare', x : getPosition(5), w: w, color : 'rgba(244, 67, 54, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'tom1', x : getPosition(4), w: 3*w, color : 'rgba(233, 30, 99, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'tom2', x : getPosition(3), w: 3*w, color : 'rgba(156, 39, 176, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'tom3', x : getPosition(2), w: 3*w, color : 'rgba(103, 58, 183, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'crash', x : getPosition(1), w: w, color : 'rgba(63, 81, 181, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'ride', x : getPosition(5), w: w, color : 'rgba(33, 150, 243, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'hihat_open', x : getPosition(7), w: w, color : 'rgba(0, 188, 212, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'hihat_closed', x : getPosition(8), w: w, color : 'rgba(76, 175, 80, .8)' }));
+visualization.addElement(new ndParticleGroup({ name : 'kick', x : getPosition(4), w : 5*w, h : 15, color : 'rgba(255, 235, 59, .8)' }));
 
 
 
