@@ -104,7 +104,7 @@ visualization.addElement(new ndParticleGroup({ name : 'kick', x : -15, color : '
  */
 let fps = 60;
 let data;
-
+let isLEDon = false;
 
 
 
@@ -113,8 +113,10 @@ function update() {
   visualization.draw();
 
 
-  data = visualization.getLEDs();
-  websocket.sendLEDs(data);
+  if (isLEDon) {
+    data = visualization.getLEDs();
+    websocket.sendLEDs(data);
+  }
 
 
   setTimeout(function() {
@@ -123,3 +125,7 @@ function update() {
 }
 
 update();
+
+document.getElementById('LEDtoggle').addEventListener('click',function(){
+  isLEDon = !isLEDon;
+});
