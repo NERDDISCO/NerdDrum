@@ -42,14 +42,14 @@ $hue: 360;
 $side-d: 120;
 $size-d: 40;
 
+// box shadow shit
 @for $i from 1 to 20 {
   $bs: $bs,
      #{-20px - random($side-d)}
      #{random($h - 4px * $size-d) + 2px * $size-d}
      0
      #{random($size-d)+px}
-     hsla($hue, 80%, random(50%), .5);
-  $bs: $bs,
+     hsla($hue, 80%, random(50%), .5),
      #{20px + random($side-d)}
      #{random($h - 4px * $size-d) + 2px * $size-d}
      0

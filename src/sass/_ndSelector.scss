@@ -20,12 +20,14 @@
   }
 }
 
+$selector_color: white;
+
 .ndSelector {
   animation: red-pulse 1s alternate infinite;
   position: relative;
 
   &::after {
-    color: rgba(255,0,50,.8);
+    color: rgba($selector_color,.8);
     content: '[' attr(data-name) ']';
     position: absolute;
     top: -40px;
@@ -34,7 +36,7 @@
 
   &::before {
     content: '';
-    border-left: 1px solid rgba(255,0,50,.8);
+    border-left: 1px solid rgba($selector_color,.8);
     height: 30px;
     transform: rotate(40deg);
     position: absolute;
@@ -53,9 +55,9 @@
 
 @keyframes red-pulse {
   from {
-    box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255,0,50,.8), 0 0 5px 3px rgba(255,0,50,.9);
+    box-shadow: 0 0 0 2px black, 0 0 0 3px rgba($selector_color,.8), 0 0 5px 3px rgba($selector_color,.9);
   }
   to {
-    box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255,0,50,.8), 0 0 0px rgba(255,0,50,.4);
+    box-shadow: 0 0 0 2px black, 0 0 0 3px rgba($selector_color,.8), 0 0 0px rgba($selector_color,.4);
   }
 }
