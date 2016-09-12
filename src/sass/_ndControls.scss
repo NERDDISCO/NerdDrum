@@ -1,0 +1,21 @@
+.controls {
+  position: relative;
+  margin-left: 40px;
+  margin-right: -20px;
+  label {
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,.5);
+    margin-bottom: 10px;
+    cursor: pointer;
+    background: 0 0 transparent linear-gradient(to right, transparent 50%, rgba(255,255,255,.5) 49%);
+    background-size: 202%;
+    transition: background-position ease-in .3s;
+    &:hover, &:focus {
+      background-position: -98% 0;
+    }
+  }
+}
+
+.selectortoggle {
+  opacity: 0;
+}

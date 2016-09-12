@@ -15,16 +15,19 @@
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
-  justify-content: space-between; }
+  justify-content: space-between;
+  -webkit-transition: opacity ease-in .3s;
+  transition: opacity ease-in .3s;
+  opacity: 1;
+  z-index: 1337; }
   .selector_container::after, .selector_container::before {
     content: ''; }
+  .selectortoggle:not(:checked) ~ div .selector_container {
+    opacity: 0; }
 
 .ndSelector {
-  z-index: 1337;
   -webkit-animation: red-pulse 1s alternate infinite;
   animation: red-pulse 1s alternate infinite;
-  -webkit-transition: opacity .3s ease-in-out;
-  transition: opacity .3s ease-in-out;
   position: relative; }
   .ndSelector::after {
     color: rgba(255, 0, 50, 0.8);
@@ -63,6 +66,27 @@
     -webkit-box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255, 0, 50, 0.8), 0 0 0px rgba(255, 0, 50, 0.4);
     box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255, 0, 50, 0.8), 0 0 0px rgba(255, 0, 50, 0.4); } }
 
+.controls {
+  position: relative;
+  margin-left: 40px;
+  margin-right: -20px; }
+  .controls label {
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+    cursor: pointer;
+    background: 0 0 transparent -webkit-gradient(linear, left top, right top, color-stop(50%, transparent), color-stop(49%, rgba(255, 255, 255, 0.5)));
+    background: 0 0 transparent -webkit-linear-gradient(left, transparent 50%, rgba(255, 255, 255, 0.5) 49%);
+    background: 0 0 transparent linear-gradient(to right, transparent 50%, rgba(255, 255, 255, 0.5) 49%);
+    background-size: 202%;
+    -webkit-transition: background-position ease-in .3s;
+    transition: background-position ease-in .3s; }
+    .controls label:hover, .controls label:focus {
+      background-position: -98% 0; }
+
+.selectortoggle {
+  opacity: 0; }
+
 html,
 body {
   padding: 0;
@@ -71,7 +95,7 @@ body {
   height: 100%;
   overflow: hidden;
   background: #222;
-  font: 1em sans-serif; }
+  font: 16px monospace; }
 
 h1 {
   font-size: 2em;
@@ -101,8 +125,8 @@ body {
   position: relative;
   width: 480px;
   height: 480px;
-  -webkit-box-shadow: -40px 0 0 -20px rgba(202, 22, 22, 0.5), 40px 0 0 -20px rgba(106, 12, 12, 0.5);
-  box-shadow: -40px 0 0 -20px rgba(202, 22, 22, 0.5), 40px 0 0 -20px rgba(106, 12, 12, 0.5); }
+  -webkit-box-shadow: -40px 0 0 -20px rgba(32, 4, 4, 0.5), 40px 0 0 -20px rgba(138, 15, 15, 0.5);
+  box-shadow: -40px 0 0 -20px rgba(32, 4, 4, 0.5), 40px 0 0 -20px rgba(138, 15, 15, 0.5); }
   #nerddisco::before {
     content: '';
     position: absolute;
@@ -110,8 +134,8 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    -webkit-box-shadow: 0 0 transparent, -98px 206px 0 26px rgba(96, 11, 11, 0.5), 62px 373px 0 15px rgba(202, 22, 22, 0.5), -80px 149px 0 5px rgba(119, 13, 13, 0.5), 140px 212px 0 37px rgba(184, 20, 20, 0.5), -49px 232px 0 36px rgba(32, 4, 4, 0.5), 71px 154px 0 3px rgba(55, 6, 6, 0.5), -139px 134px 0 17px rgba(23, 3, 3, 0.5), 53px 114px 0 35px rgba(106, 12, 12, 0.5), -89px 243px 0 12px rgba(124, 14, 14, 0.5), 84px 385px 0 29px rgba(129, 14, 14, 0.5), -89px 211px 0 15px rgba(133, 15, 15, 0.5), 87px 253px 0 7px rgba(211, 23, 23, 0.5), -60px 354px 0 34px rgba(138, 15, 15, 0.5), 95px 91px 0 33px rgba(161, 18, 18, 0.5), -126px 244px 0 24px rgba(119, 13, 13, 0.5), 56px 197px 0 36px rgba(60, 7, 7, 0.5), -59px 286px 0 15px rgba(96, 11, 11, 0.5), 106px 194px 0 28px rgba(197, 22, 22, 0.5), -38px 100px 0 7px rgba(147, 16, 16, 0.5), 65px 395px 0 40px rgba(5, 1, 1, 0.5), -135px 143px 0 32px rgba(83, 9, 9, 0.5), 88px 130px 0 6px rgba(188, 21, 21, 0.5), -130px 363px 0 36px rgba(78, 9, 9, 0.5), 80px 378px 0 17px rgba(50, 6, 6, 0.5), -34px 125px 0 36px rgba(87, 10, 10, 0.5), 52px 398px 0 7px rgba(129, 14, 14, 0.5), -66px 153px 0 7px rgba(87, 10, 10, 0.5), 26px 343px 0 25px rgba(147, 16, 16, 0.5), -23px 237px 0 33px rgba(69, 8, 8, 0.5), 37px 108px 0 2px rgba(188, 21, 21, 0.5), -71px 165px 0 16px rgba(142, 16, 16, 0.5), 30px 264px 0 4px rgba(161, 18, 18, 0.5), -65px 394px 0 39px rgba(138, 15, 15, 0.5), 24px 118px 0 26px rgba(46, 5, 5, 0.5), -40px 286px 0 25px rgba(69, 8, 8, 0.5), 85px 397px 0 28px rgba(184, 20, 20, 0.5), -132px 329px 0 33px rgba(207, 23, 23, 0.5), 103px 263px 0 5px rgba(37, 4, 4, 0.5);
-    box-shadow: 0 0 transparent, -98px 206px 0 26px rgba(96, 11, 11, 0.5), 62px 373px 0 15px rgba(202, 22, 22, 0.5), -80px 149px 0 5px rgba(119, 13, 13, 0.5), 140px 212px 0 37px rgba(184, 20, 20, 0.5), -49px 232px 0 36px rgba(32, 4, 4, 0.5), 71px 154px 0 3px rgba(55, 6, 6, 0.5), -139px 134px 0 17px rgba(23, 3, 3, 0.5), 53px 114px 0 35px rgba(106, 12, 12, 0.5), -89px 243px 0 12px rgba(124, 14, 14, 0.5), 84px 385px 0 29px rgba(129, 14, 14, 0.5), -89px 211px 0 15px rgba(133, 15, 15, 0.5), 87px 253px 0 7px rgba(211, 23, 23, 0.5), -60px 354px 0 34px rgba(138, 15, 15, 0.5), 95px 91px 0 33px rgba(161, 18, 18, 0.5), -126px 244px 0 24px rgba(119, 13, 13, 0.5), 56px 197px 0 36px rgba(60, 7, 7, 0.5), -59px 286px 0 15px rgba(96, 11, 11, 0.5), 106px 194px 0 28px rgba(197, 22, 22, 0.5), -38px 100px 0 7px rgba(147, 16, 16, 0.5), 65px 395px 0 40px rgba(5, 1, 1, 0.5), -135px 143px 0 32px rgba(83, 9, 9, 0.5), 88px 130px 0 6px rgba(188, 21, 21, 0.5), -130px 363px 0 36px rgba(78, 9, 9, 0.5), 80px 378px 0 17px rgba(50, 6, 6, 0.5), -34px 125px 0 36px rgba(87, 10, 10, 0.5), 52px 398px 0 7px rgba(129, 14, 14, 0.5), -66px 153px 0 7px rgba(87, 10, 10, 0.5), 26px 343px 0 25px rgba(147, 16, 16, 0.5), -23px 237px 0 33px rgba(69, 8, 8, 0.5), 37px 108px 0 2px rgba(188, 21, 21, 0.5), -71px 165px 0 16px rgba(142, 16, 16, 0.5), 30px 264px 0 4px rgba(161, 18, 18, 0.5), -65px 394px 0 39px rgba(138, 15, 15, 0.5), 24px 118px 0 26px rgba(46, 5, 5, 0.5), -40px 286px 0 25px rgba(69, 8, 8, 0.5), 85px 397px 0 28px rgba(184, 20, 20, 0.5), -132px 329px 0 33px rgba(207, 23, 23, 0.5), 103px 263px 0 5px rgba(37, 4, 4, 0.5); }
+    -webkit-box-shadow: 0 0 transparent, -87px 200px 0 16px rgba(138, 15, 15, 0.5), 51px 197px 0 21px rgba(32, 4, 4, 0.5), -112px 400px 0 27px rgba(230, 26, 26, 0.5), 92px 245px 0 36px rgba(9, 1, 1, 0.5), -99px 399px 0 13px rgba(28, 3, 3, 0.5), 99px 355px 0 39px rgba(101, 11, 11, 0.5), -119px 294px 0 28px rgba(73, 8, 8, 0.5), 58px 266px 0 32px rgba(133, 15, 15, 0.5), -39px 205px 0 39px rgba(69, 8, 8, 0.5), 97px 175px 0 28px rgba(124, 14, 14, 0.5), -44px 295px 0 33px rgba(165, 18, 18, 0.5), 52px 288px 0 5px rgba(188, 21, 21, 0.5), -99px 357px 0 40px rgba(5, 1, 1, 0.5), 118px 95px 0 7px rgba(193, 21, 21, 0.5), -83px 228px 0 39px rgba(83, 9, 9, 0.5), 26px 190px 0 24px rgba(207, 23, 23, 0.5), -112px 249px 0 35px rgba(41, 5, 5, 0.5), 76px 300px 0 29px rgba(151, 17, 17, 0.5), -63px 243px 0 27px rgba(106, 12, 12, 0.5), 118px 139px 0 28px rgba(115, 13, 13, 0.5), -32px 124px 0 10px rgba(9, 1, 1, 0.5), 55px 257px 0 20px rgba(83, 9, 9, 0.5), -68px 178px 0 17px rgba(96, 11, 11, 0.5), 95px 274px 0 8px rgba(170, 19, 19, 0.5), -34px 128px 0 25px rgba(133, 15, 15, 0.5), 107px 285px 0 23px rgba(46, 5, 5, 0.5), -34px 358px 0 8px rgba(101, 11, 11, 0.5), 87px 176px 0 32px rgba(64, 7, 7, 0.5), -90px 325px 0 17px rgba(64, 7, 7, 0.5), 33px 259px 0 20px rgba(110, 12, 12, 0.5), -40px 238px 0 17px rgba(50, 6, 6, 0.5), 92px 339px 0 36px rgba(138, 15, 15, 0.5), -125px 283px 0 31px rgba(78, 9, 9, 0.5), 124px 82px 0 19px rgba(147, 16, 16, 0.5), -90px 85px 0 25px rgba(46, 5, 5, 0.5), 117px 160px 0 25px rgba(32, 4, 4, 0.5), -113px 306px 0 30px rgba(78, 9, 9, 0.5), 81px 171px 0 34px rgba(14, 2, 2, 0.5);
+    box-shadow: 0 0 transparent, -87px 200px 0 16px rgba(138, 15, 15, 0.5), 51px 197px 0 21px rgba(32, 4, 4, 0.5), -112px 400px 0 27px rgba(230, 26, 26, 0.5), 92px 245px 0 36px rgba(9, 1, 1, 0.5), -99px 399px 0 13px rgba(28, 3, 3, 0.5), 99px 355px 0 39px rgba(101, 11, 11, 0.5), -119px 294px 0 28px rgba(73, 8, 8, 0.5), 58px 266px 0 32px rgba(133, 15, 15, 0.5), -39px 205px 0 39px rgba(69, 8, 8, 0.5), 97px 175px 0 28px rgba(124, 14, 14, 0.5), -44px 295px 0 33px rgba(165, 18, 18, 0.5), 52px 288px 0 5px rgba(188, 21, 21, 0.5), -99px 357px 0 40px rgba(5, 1, 1, 0.5), 118px 95px 0 7px rgba(193, 21, 21, 0.5), -83px 228px 0 39px rgba(83, 9, 9, 0.5), 26px 190px 0 24px rgba(207, 23, 23, 0.5), -112px 249px 0 35px rgba(41, 5, 5, 0.5), 76px 300px 0 29px rgba(151, 17, 17, 0.5), -63px 243px 0 27px rgba(106, 12, 12, 0.5), 118px 139px 0 28px rgba(115, 13, 13, 0.5), -32px 124px 0 10px rgba(9, 1, 1, 0.5), 55px 257px 0 20px rgba(83, 9, 9, 0.5), -68px 178px 0 17px rgba(96, 11, 11, 0.5), 95px 274px 0 8px rgba(170, 19, 19, 0.5), -34px 128px 0 25px rgba(133, 15, 15, 0.5), 107px 285px 0 23px rgba(46, 5, 5, 0.5), -34px 358px 0 8px rgba(101, 11, 11, 0.5), 87px 176px 0 32px rgba(64, 7, 7, 0.5), -90px 325px 0 17px rgba(64, 7, 7, 0.5), 33px 259px 0 20px rgba(110, 12, 12, 0.5), -40px 238px 0 17px rgba(50, 6, 6, 0.5), 92px 339px 0 36px rgba(138, 15, 15, 0.5), -125px 283px 0 31px rgba(78, 9, 9, 0.5), 124px 82px 0 19px rgba(147, 16, 16, 0.5), -90px 85px 0 25px rgba(46, 5, 5, 0.5), 117px 160px 0 25px rgba(32, 4, 4, 0.5), -113px 306px 0 30px rgba(78, 9, 9, 0.5), 81px 171px 0 34px rgba(14, 2, 2, 0.5); }
   #nerddisco canvas {
     position: relative;
     background: #000; }

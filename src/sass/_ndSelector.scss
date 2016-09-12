@@ -7,19 +7,21 @@
   display: flex;
   align-items: stretch;
   justify-content: space-between;
+  transition: opacity ease-in .3s;
+  opacity: 1;
+  z-index: 1337;
 
   &::after, &::before {
     content: '';
   }
+
+  .selectortoggle:not(:checked) ~ div & {
+    opacity: 0;
+  }
 }
 
 .ndSelector {
-  z-index: 1337;
-  // box-shadow: 0 0 0 5px rgba(255, 0, 0, .5);
   animation: red-pulse 1s alternate infinite;
-
-  transition: opacity .3s ease-in-out;
-
   position: relative;
 
   &::after {

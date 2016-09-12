@@ -1,4 +1,5 @@
 @import "ndSelector";
+@import "ndControls";
 
 $bg_color: #222;
 
@@ -10,7 +11,7 @@ body {
   height: 100%;
   overflow: hidden;
   background: $bg_color;
-  font: 1em sans-serif;
+  font: 16px monospace;
 }
 
 h1 {
