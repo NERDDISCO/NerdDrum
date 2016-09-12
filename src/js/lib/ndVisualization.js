@@ -154,8 +154,8 @@ export default class ndVisualization {
     if (!this.drawing_permanent) {
       this.canvas_context.clearRect(0, 0, this.canvas_element.width, this.canvas_element.height);
       // Redraw the background
-      /*this.canvas_context.fillStyle = "rgba(0, 0, 0, .6)";
-      this.canvas_context.fillRect(0, 0, this.canvas_element.width, this.canvas_element.height);*/
+      // this.canvas_context.fillStyle = "rgba(0, 0, 0, .2)";
+      // this.canvas_context.fillRect(0, 0, this.canvas_element.width, this.canvas_element.height);
     }
 
     if (this.drawing_activated && this.canvas_element_is_mouse_down) {

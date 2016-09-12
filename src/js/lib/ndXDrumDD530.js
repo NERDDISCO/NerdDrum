@@ -78,4 +78,4 @@ export default class ndXDrumDD530 {
     document.body.dispatchEvent(this.event);
   }
 
-} // / ndKorgNanoPad2
+} // / ndXDrumDD530
