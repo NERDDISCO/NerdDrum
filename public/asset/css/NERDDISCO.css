@@ -15,36 +15,53 @@
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
-  justify-content: space-between;
-  overflow: hidden; }
+  justify-content: space-between; }
   .selector_container::after, .selector_container::before {
     content: ''; }
 
 .ndSelector {
   z-index: 1337;
-  -webkit-box-shadow: 0 0 0 5px rgba(255, 0, 0, 0.5);
-  box-shadow: 0 0 0 5px rgba(255, 0, 0, 0.5);
+  -webkit-animation: red-pulse 1s alternate infinite;
+  animation: red-pulse 1s alternate infinite;
   -webkit-transition: opacity .3s ease-in-out;
   transition: opacity .3s ease-in-out;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center; }
+  position: relative; }
   .ndSelector::after {
-    color: #fff;
-    content: attr(data-name); }
+    color: rgba(255, 0, 50, 0.8);
+    content: "[" attr(data-name) "]";
+    position: absolute;
+    top: -40px;
+    left: 20px; }
+  .ndSelector::before {
+    content: '';
+    border-left: 1px solid rgba(255, 0, 50, 0.8);
+    height: 30px;
+    -webkit-transform: rotate(40deg);
+    -ms-transform: rotate(40deg);
+    transform: rotate(40deg);
+    position: absolute;
+    top: -29px;
+    left: 13px; }
   .ndSelector[data-visible='true'] {
     opacity: 1; }
   .ndSelector[data-visible='false'] {
     opacity: 0; }
+
+@-webkit-keyframes red-pulse {
+  from {
+    -webkit-box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255, 0, 50, 0.8), 0 0 5px 3px rgba(255, 0, 50, 0.9);
+    box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255, 0, 50, 0.8), 0 0 5px 3px rgba(255, 0, 50, 0.9); }
+  to {
+    -webkit-box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255, 0, 50, 0.8), 0 0 0px rgba(255, 0, 50, 0.4);
+    box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255, 0, 50, 0.8), 0 0 0px rgba(255, 0, 50, 0.4); } }
+
+@keyframes red-pulse {
+  from {
+    -webkit-box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255, 0, 50, 0.8), 0 0 5px 3px rgba(255, 0, 50, 0.9);
+    box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255, 0, 50, 0.8), 0 0 5px 3px rgba(255, 0, 50, 0.9); }
+  to {
+    -webkit-box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255, 0, 50, 0.8), 0 0 0px rgba(255, 0, 50, 0.4);
+    box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255, 0, 50, 0.8), 0 0 0px rgba(255, 0, 50, 0.4); } }
 
 html,
 body {
@@ -53,7 +70,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #fff;
+  background: #222;
   font: 1em sans-serif; }
 
 h1 {
@@ -66,14 +83,37 @@ h2 {
   padding: 0;
   margin: .25em 0 0 0; }
 
+body {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+
 #nerddisco {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: -240px 0 0 -240px;
+  position: relative;
   width: 480px;
-  height: 480px; }
+  height: 480px;
+  -webkit-box-shadow: -40px 0 0 -20px rgba(202, 22, 22, 0.5), 40px 0 0 -20px rgba(106, 12, 12, 0.5);
+  box-shadow: -40px 0 0 -20px rgba(202, 22, 22, 0.5), 40px 0 0 -20px rgba(106, 12, 12, 0.5); }
+  #nerddisco::before {
+    content: '';
+    position: absolute;
+    height: 30px;
+    top: 0;
+    left: 0;
+    right: 0;
+    -webkit-box-shadow: 0 0 transparent, -98px 206px 0 26px rgba(96, 11, 11, 0.5), 62px 373px 0 15px rgba(202, 22, 22, 0.5), -80px 149px 0 5px rgba(119, 13, 13, 0.5), 140px 212px 0 37px rgba(184, 20, 20, 0.5), -49px 232px 0 36px rgba(32, 4, 4, 0.5), 71px 154px 0 3px rgba(55, 6, 6, 0.5), -139px 134px 0 17px rgba(23, 3, 3, 0.5), 53px 114px 0 35px rgba(106, 12, 12, 0.5), -89px 243px 0 12px rgba(124, 14, 14, 0.5), 84px 385px 0 29px rgba(129, 14, 14, 0.5), -89px 211px 0 15px rgba(133, 15, 15, 0.5), 87px 253px 0 7px rgba(211, 23, 23, 0.5), -60px 354px 0 34px rgba(138, 15, 15, 0.5), 95px 91px 0 33px rgba(161, 18, 18, 0.5), -126px 244px 0 24px rgba(119, 13, 13, 0.5), 56px 197px 0 36px rgba(60, 7, 7, 0.5), -59px 286px 0 15px rgba(96, 11, 11, 0.5), 106px 194px 0 28px rgba(197, 22, 22, 0.5), -38px 100px 0 7px rgba(147, 16, 16, 0.5), 65px 395px 0 40px rgba(5, 1, 1, 0.5), -135px 143px 0 32px rgba(83, 9, 9, 0.5), 88px 130px 0 6px rgba(188, 21, 21, 0.5), -130px 363px 0 36px rgba(78, 9, 9, 0.5), 80px 378px 0 17px rgba(50, 6, 6, 0.5), -34px 125px 0 36px rgba(87, 10, 10, 0.5), 52px 398px 0 7px rgba(129, 14, 14, 0.5), -66px 153px 0 7px rgba(87, 10, 10, 0.5), 26px 343px 0 25px rgba(147, 16, 16, 0.5), -23px 237px 0 33px rgba(69, 8, 8, 0.5), 37px 108px 0 2px rgba(188, 21, 21, 0.5), -71px 165px 0 16px rgba(142, 16, 16, 0.5), 30px 264px 0 4px rgba(161, 18, 18, 0.5), -65px 394px 0 39px rgba(138, 15, 15, 0.5), 24px 118px 0 26px rgba(46, 5, 5, 0.5), -40px 286px 0 25px rgba(69, 8, 8, 0.5), 85px 397px 0 28px rgba(184, 20, 20, 0.5), -132px 329px 0 33px rgba(207, 23, 23, 0.5), 103px 263px 0 5px rgba(37, 4, 4, 0.5);
+    box-shadow: 0 0 transparent, -98px 206px 0 26px rgba(96, 11, 11, 0.5), 62px 373px 0 15px rgba(202, 22, 22, 0.5), -80px 149px 0 5px rgba(119, 13, 13, 0.5), 140px 212px 0 37px rgba(184, 20, 20, 0.5), -49px 232px 0 36px rgba(32, 4, 4, 0.5), 71px 154px 0 3px rgba(55, 6, 6, 0.5), -139px 134px 0 17px rgba(23, 3, 3, 0.5), 53px 114px 0 35px rgba(106, 12, 12, 0.5), -89px 243px 0 12px rgba(124, 14, 14, 0.5), 84px 385px 0 29px rgba(129, 14, 14, 0.5), -89px 211px 0 15px rgba(133, 15, 15, 0.5), 87px 253px 0 7px rgba(211, 23, 23, 0.5), -60px 354px 0 34px rgba(138, 15, 15, 0.5), 95px 91px 0 33px rgba(161, 18, 18, 0.5), -126px 244px 0 24px rgba(119, 13, 13, 0.5), 56px 197px 0 36px rgba(60, 7, 7, 0.5), -59px 286px 0 15px rgba(96, 11, 11, 0.5), 106px 194px 0 28px rgba(197, 22, 22, 0.5), -38px 100px 0 7px rgba(147, 16, 16, 0.5), 65px 395px 0 40px rgba(5, 1, 1, 0.5), -135px 143px 0 32px rgba(83, 9, 9, 0.5), 88px 130px 0 6px rgba(188, 21, 21, 0.5), -130px 363px 0 36px rgba(78, 9, 9, 0.5), 80px 378px 0 17px rgba(50, 6, 6, 0.5), -34px 125px 0 36px rgba(87, 10, 10, 0.5), 52px 398px 0 7px rgba(129, 14, 14, 0.5), -66px 153px 0 7px rgba(87, 10, 10, 0.5), 26px 343px 0 25px rgba(147, 16, 16, 0.5), -23px 237px 0 33px rgba(69, 8, 8, 0.5), 37px 108px 0 2px rgba(188, 21, 21, 0.5), -71px 165px 0 16px rgba(142, 16, 16, 0.5), 30px 264px 0 4px rgba(161, 18, 18, 0.5), -65px 394px 0 39px rgba(138, 15, 15, 0.5), 24px 118px 0 26px rgba(46, 5, 5, 0.5), -40px 286px 0 25px rgba(69, 8, 8, 0.5), 85px 397px 0 28px rgba(184, 20, 20, 0.5), -132px 329px 0 33px rgba(207, 23, 23, 0.5), 103px 263px 0 5px rgba(37, 4, 4, 0.5); }
   #nerddisco canvas {
+    position: relative;
     background: #000; }
 
 video {

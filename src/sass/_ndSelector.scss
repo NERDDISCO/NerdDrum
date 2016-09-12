@@ -7,7 +7,6 @@
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  overflow: hidden;
 
   &::after, &::before {
     content: '';
@@ -16,17 +15,29 @@
 
 .ndSelector {
   z-index: 1337;
-  box-shadow: 0 0 0 5px rgba(255, 0, 0, .5);
+  // box-shadow: 0 0 0 5px rgba(255, 0, 0, .5);
+  animation: red-pulse 1s alternate infinite;
 
   transition: opacity .3s ease-in-out;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
 
   &::after {
-    color: #fff;
-    content: attr(data-name);
+    color: rgba(255,0,50,.8);
+    content: '[' attr(data-name) ']';
+    position: absolute;
+    top: -40px;
+    left: 20px;
+  }
+
+  &::before {
+    content: '';
+    border-left: 1px solid rgba(255,0,50,.8);
+    height: 30px;
+    transform: rotate(40deg);
+    position: absolute;
+    top: -29px;
+    left: 13px;
   }
 
   &[data-visible='true'] {
@@ -35,5 +46,14 @@
 
   &[data-visible='false'] {
     opacity: 0;
+  }
+}
+
+@keyframes red-pulse {
+  from {
+    box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255,0,50,.8), 0 0 5px 3px rgba(255,0,50,.9);
+  }
+  to {
+    box-shadow: 0 0 0 2px black, 0 0 0 3px rgba(255,0,50,.8), 0 0 0px rgba(255,0,50,.4);
   }
 }

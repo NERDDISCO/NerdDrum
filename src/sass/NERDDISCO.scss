@@ -1,5 +1,7 @@
 @import "ndSelector";
 
+$bg_color: #222;
+
 html,
 body {
   padding: 0;
@@ -7,7 +9,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #fff;
+  background: $bg_color;
   font: 1em sans-serif;
 }
 
@@ -32,15 +34,54 @@ body {
   justify-content: center;
 }
 
+$h: $canvas-height;
+$bs: 0 0 transparent;
+
+$hue: 360;
+$side-d: 120;
+$size-d: 40;
+
+@for $i from 1 to 20 {
+  $bs: $bs,
+     #{-20px - random($side-d)}
+     #{random($h - 4px * $size-d) + 2px * $size-d}
+     0
+     #{random($size-d)+px}
+     hsla($hue, 80%, random(50%), .5);
+  $bs: $bs,
+     #{20px + random($side-d)}
+     #{random($h - 4px * $size-d) + 2px * $size-d}
+     0
+     #{random($size-d)+px}
+     hsla($hue, 80%, random(50%), .5);
+}
+
 #nerddisco {
   position: relative;
   width: $canvas-width;
   height: $canvas-height;
 
+
+  box-shadow:
+     -40px 0 0 -20px hsla($hue, 80%, random(50%), .5),
+     40px 0 0 -20px hsla($hue, 80%, random(50%), .5);
+  &::before {
+    content: '';
+    position: absolute;
+    height: 30px;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: $bs;
+  }
+
   canvas {
+    position: relative;
     background: #000;
   }
 }
+
+
 
 video {
   display: none;

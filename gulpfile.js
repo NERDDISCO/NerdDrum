@@ -116,7 +116,7 @@ gulp.task('commonjs-bundle',['clean-commonjs-bundle', 'es6-commonjs'], function(
  */
 gulp.task('sass', function () {
   gulp.src(path.sass.src)
-    .pipe(sass())
+    .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer({
       browsers: ['last 10 versions'],
       cascade: false
