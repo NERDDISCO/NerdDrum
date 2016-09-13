@@ -134,6 +134,9 @@ export default class ndMidi {
       return;
     }
 
+    // Custom event for MIDI signals
+    this.event = new CustomEvent("ndMidiEvent", { nd : {} });
+
     let command = message.data[0].toString(16).charAt(0);
     let channel = message.data[0].toString(16).charAt(1);
 

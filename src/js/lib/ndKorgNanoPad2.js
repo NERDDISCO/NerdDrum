@@ -3,6 +3,7 @@
 // Stupid hack because I have to load rxjs in CommonJS style :(
 var Observable = require('rxjs/Observable').Observable;
 import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/pairwise';
 
 
 
@@ -56,6 +57,7 @@ export default class ndKorgNanoPad2 {
    * Listen to ndMidiEvent's
    */
   listen() {
+    const DELAYLIMIT = 100;
     var midi$ =
       Observable.fromEvent(document.body, 'ndMidiEvent')
 
@@ -70,10 +72,25 @@ export default class ndKorgNanoPad2 {
       })
     ;
 
+
     // Subscribe to the ndAudioEvent stream
     midi$.subscribe(midiEvent => {
       this.work(midiEvent);
     });
+
+    var midiPairs$ = midi$.pairwise()
+      .filter(([event1, event2]) => {
+        return ((this.mapping[event1.nd.note] === 'tom1' && this.mapping[event2.nd.note] === 'tom2' ||
+                this.mapping[event2.nd.note] === 'tom1' && this.mapping[event1.nd.note] === 'tom2') &&
+                Math.abs(event1.nd.timeStamp - event2.nd.timeStamp) < DELAYLIMIT)
+      });
+
+    // Subscribe to the ??
+    midiPairs$.subscribe(midiEventPair => {
+      this.workPair(midiEventPair);
+    });
+
+
 
   }
 
@@ -85,9 +102,19 @@ export default class ndKorgNanoPad2 {
     this.event.nd = {};
     this.event.nd.name = this.mapping[midiEvent.nd.note];
 
-    console.log(midiEvent.nd);
+    // console.log(midiEvent.nd);
 
     document.body.dispatchEvent(this.event);
+  }
+
+  /*
+   * Get some work done
+   */
+  workPair(midiEventPair) {
+    // console.log(midiEventPair);
+
+    let event = new CustomEvent("ndStarPowerEvent");
+    document.body.dispatchEvent(event);
   }
 
 } // / ndKorgNanoPad2

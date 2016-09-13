@@ -63,6 +63,18 @@ export default class ndXDrumDD530 {
       this.work(midiEvent);
     });
 
+    var midiPairs$ = midi$.pairwise()
+      .filter(([event1, event2]) => {
+        return ((this.mapping[event1.nd.note] === 'tom1' && this.mapping[event2.nd.note] === 'tom2' ||
+                this.mapping[event2.nd.note] === 'tom1' && this.mapping[event1.nd.note] === 'tom2') &&
+                Math.abs(event1.nd.timeStamp - event2.nd.timeStamp) < DELAYLIMIT)
+      });
+
+    // Subscribe to the ??
+    midiPairs$.subscribe(midiEventPair => {
+      this.workPair(midiEventPair);
+    });
+
   }
 
 
@@ -76,6 +88,13 @@ export default class ndXDrumDD530 {
     console.log(midiEvent.nd);
 
     document.body.dispatchEvent(this.event);
+  }
+
+  workPair(midiEventPair) {
+    // console.log(midiEventPair);
+
+    let event = new CustomEvent("ndStarPowerEvent");
+    document.body.dispatchEvent(event);
   }
 
 } // / ndXDrumDD530
