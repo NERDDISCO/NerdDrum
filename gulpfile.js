@@ -165,4 +165,4 @@ gulp.task('watcher', function() {
  * - start the server using nodemon
  * - start watching of file changes
  */
-gulp.task('default', [ 'nodemon', 'watcher']);
+gulp.task('default', [ 'sass', 'commonjs-bundle', 'nodemon', 'watcher']);

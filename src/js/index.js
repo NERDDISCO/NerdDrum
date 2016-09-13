@@ -4,6 +4,7 @@
 import config from "./config";
 import ndVisualization from "./lib/ndVisualization";
 import ndParticleGroup from "./lib/ndParticleGroup";
+import ndStarPower from "./lib/ndStarPower";
 import ndConnector from "./lib/ndConnector";
 import ndMidi from "./lib/ndMidi";
 import ndSelector from "./lib/ndSelector";
@@ -96,6 +97,8 @@ visualization.addElement(new ndParticleGroup({ name : 'ride', x : getPosition(5)
 visualization.addElement(new ndParticleGroup({ name : 'hihat_open', x : getPosition(7), w: w, color : 'rgba(0, 188, 212, .8)' }));
 visualization.addElement(new ndParticleGroup({ name : 'hihat_closed', x : getPosition(8), w: w, color : 'rgba(76, 175, 80, .8)' }));
 visualization.addElement(new ndParticleGroup({ name : 'kick', x : getPosition(4), w : 5*w, h : 15, color : 'rgba(255, 235, 59, .8)' }));
+
+visualization.addElement(new ndStarPower({ color : 'rgba(255, 255, 255, .8)' }));
 
 
 

@@ -1,1 +1,4 @@
 * particles push to particlegroup cleanup
+* tom1 + tom2 = trigger flash
+* tom1 + tom2 = global change direction / color
+* increase the height of the particales based on velocity
